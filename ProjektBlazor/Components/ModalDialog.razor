@@ -1,0 +1,211 @@
+﻿@using ProjektBlazor.Pages;
+@using ProjektBlazor.Components;
+@using ProjektBlazor.Services.Contracts;
+@inherits GlownaBase
+
+<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content custom-modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kupno biletów</h5>
+                <button type="button" class="close" @onclick="() => Close()" data-dismiss=" modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label style="display: flex; justify-content: center; align-items: center;font-size: 24px ">
+                    @nazwaFilmu
+                </label>
+                <br /> 
+
+                <label style="display: flex; justify-content: center; align-items: center;font-size: 22px ">
+                    @godzina @data
+                </label>
+                <br /> 
+
+                 <label style="font-size: 20px;">
+                    Liczba wybranych biletów: <strong>@currentCount</strong> 
+                </label>
+                <br /> 
+
+                <label style="font-size: 20px;">
+                    Cena: <strong> @CalculatePrice()zł </strong> (13zł za 1 bilet)
+                </label>
+                <br /> <br />
+
+                <form>
+                    <input type="text" class="form-control" placeholder="Imię" @bind="imie" required pattern="[A-Za-z ]+" />
+                    <br />
+                    <input type="text" class="form-control" placeholder="Nazwisko" @bind="nazwisko" required pattern="[A-Za-z]+" />
+                    <br />
+                    <input type="tel" class="form-control" placeholder="Numer telefonu" @bind="phone" required pattern="[0-9]{9}" />
+                    <br />
+                    <input type="email" class="form-control" placeholder="Adres e-mail" @bind="email" required />
+                    
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                        <div class="error-message">
+                        @errorMessage
+                        </div>
+                }
+
+                    <button type="submit" class="zatwierdzenie" @onclick="() => Zatwierdzenie()" style="margin-left:100px;  margin-bottom:0px;">ZAREZERWUJ</button>
+                </form>
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+@*@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+*@
+
+@code {
+    [Parameter]
+    public string? data { get; set; }
+    [Parameter]
+    public string? godzina { get; set; }
+    [Parameter]
+    public string? nazwaFilmu { get; set; }
+    [Parameter]
+    public string? idFilm { get; set; }
+    [Parameter]
+    public int currentCount { get; set; }
+    [Parameter]
+    public List<int>? zaznaczoneMiejsca { get; set; }
+
+    public string? imie { get; set; }
+    public string? nazwisko { get; set; }
+    public string? email { get; set; }
+    public string? phone { get; set; }
+    public string? errorMessage;
+
+    public int CalculatePrice()
+    {
+        return 13 * currentCount;
+    }
+
+    public Guid Guid = Guid.NewGuid();
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        //       ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+
+public void Zatwierdzenie()
+{
+    if (ValidateForm())
+    {
+        foreach (var item in zaznaczoneMiejsca)
+        {
+            UpdateSeat_Click(item, imie, nazwisko, email, phone);
+        }
+
+        NavigationManager.NavigateTo($"/sala/{idFilm}", forceLoad: true);
+    }
+    else
+    {
+        errorMessage = "Proszę wypełnić wszystkie pola poprawnie.";
+    }
+}bool ValidateForm()
+    {
+        if (string.IsNullOrEmpty(imie) || string.IsNullOrEmpty(nazwisko) ||
+            string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(email))
+        {
+            return false;
+        }
+
+        if (!IsNameValid(imie) || !IsNameValid(nazwisko))
+        {
+            return false;
+        }
+        if (!IsPhoneNumberValid(phone) || phone.Length != 9)
+
+        {
+            return false;
+        }
+        if (!IsEmailValid(email))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool IsNameValid(string name)
+    {
+        foreach (char c in name)
+        {
+            if (!char.IsLetter(c) && c != ' ')
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    public bool IsEmailValid(string email)
+    {
+        if (!email.Contains("@"))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        //        ShowBackdrop = false;
+        StateHasChanged();
+
+    }
+    public bool IsPhoneNumberValid(string phoneNumber)
+    {
+        if (phoneNumber.Length > 1 && phoneNumber[0] == '+')
+        {
+            phoneNumber = phoneNumber.Substring(1);
+        }
+        foreach (char c in phoneNumber)
+        {
+            if (!char.IsDigit(c))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+<style>
+    .modal-dialog {
+        height: 70vh; /* Ustaw preferowaną wysokość modala */
+    }
+
+    .custom-modal-content {
+        height: 100%;
+    }
+      .error-message {
+        color: red;
+        margin-top: 10px;
+    }
+</style>

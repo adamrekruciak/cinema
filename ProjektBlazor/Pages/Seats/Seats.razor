@@ -1,0 +1,128 @@
+﻿@page "/sala/1"
+@using ProjektBlazor.Components;
+@inherits GlownaBase
+<PageTitle>Sala I</PageTitle>
+
+@if (Miejsca == null)
+{
+    <h3>Ładowanie miejsc</h3>
+}
+else
+{
+    var seatCount = Miejsca.Count(m => m.FilmId == 1);
+    <div class="row">
+            <div class="col">
+                <div class="ekran">Ekran</div>
+
+            @if (seatCount > 0)
+            {
+                const int itemsPerRow = 12;
+                var seatRowList = new List<MiejsceDto>();
+
+                @for (int i = 0; i < seatCount - 24; i += itemsPerRow)
+                {
+                    seatRowList = Miejsca.Where(m => m.FilmId == 1).Skip(i).Take(itemsPerRow).ToList();
+                         <div class="containerbig">
+                         <div class="rzadnr">  @(i / itemsPerRow + 1) </div>
+                        <div class="container">
+                         @foreach (var item in seatRowList)
+                        {
+                            <div class="col-md-auto">
+                                     @if(item.Status==false){
+                                        <button class="btn btn-success btn-lg @(item.IsSelected ? "btn-dark" : "")" @onclick='() => {ToggleSelection(item);  MiejsceClick(item.Id);}'>@item.Numer</button>
+                                     }
+                                     else{
+                                        <button class="btn btn-danger btn-lg" @onclick='() => UpdateSeat_Click(item.Id, "","","","")'>@item.Numer</button>
+                                     }
+                            </div>
+                        }
+                        </div>
+                        </div>
+                        
+                }
+
+            }
+        </div>
+        <div class="col">
+            
+                <div class="filmopis">
+
+            @if (Films != null && Films.Any(f => f.Id == 1))
+            {
+                 <h1>@Films.First(f => f.Id == 1).Nazwa</h1><br>
+                 <p style="margin-top:-15px; text-align:left; ">Od lat:  @Films.First(f => f.Id == 1).Wiek, czas trwania: @Films.First(f => f.Id == 1).Dlugosc</p>
+                 <p style="text-align:left; ">Produkcja: @Films.First(f => f.Id == 1).Produkcja </p>
+                 <h2>@data </h2> <br>
+                 <h3>@godzina</h3>
+            }
+                </div>
+
+            <div class="legenda" style="margin-top:155px;">
+                <p class="legenda1">LEGENDA</p>
+
+                <div class="dolegendy"><div class="green-square"></div>WOLNE </div>
+                <div class="dolegendy"><div class="red-square"></div>ZAJĘTE </div>
+                <div class="dolegendy"><div class="blue-square"></div>WYBRANE </div>
+                <br>
+                <p role="status" style="font-size:24px;">Liczba wybranych miejsc: @currentCount</p>
+            </div>
+            @code {
+            private int currentCount = 0;
+
+            private List<int> zaznaczoneMiejsca = new List<int>();
+
+            private string idFilm = "1";
+
+            private void MiejsceClick(int idMiejsce)
+            {
+                if (zaznaczoneMiejsca.Contains(idMiejsce))
+                {
+                    zaznaczoneMiejsca.Remove(idMiejsce);
+                }
+                else
+                {
+                    zaznaczoneMiejsca.Add(idMiejsce);
+                }
+                Console.WriteLine("***");
+                foreach (var item in zaznaczoneMiejsca)
+                {
+
+                    Console.WriteLine(item);
+
+                }
+                Console.WriteLine("***");
+            }
+
+            private void ToggleSelection(MiejsceDto miejsce)
+            {
+                if (!miejsce.IsSelected)
+                {
+                    miejsce.IsSelected = true;
+                    currentCount++;
+                    isSelectionEmpty = false;
+                }
+                else
+                {
+                    miejsce.IsSelected = false;
+                    currentCount--;
+                    isSelectionEmpty = currentCount == 0;
+                }
+            }
+}
+        <button type="button" class="btn btn-primary zatwierdzenie" @onclick="() => Modal.Open()" disabled="@isSelectionEmpty">WYBIERZ BILETY</button>
+        <a href="/" class="btn btn-dark btn-lg cofnij"> COFNIJ</a>
+    </div>
+    </div>
+}
+<ProjektBlazor.Components.ModalDialog @ref="Modal" currentCount="currentCount" nazwaFilmu="@Films?.FirstOrDefault(f => f.Id == 1)?.Nazwa" data="@data" idFilm="@idFilm" godzina="@godzina" zaznaczoneMiejsca="@zaznaczoneMiejsca"> </ProjektBlazor.Components.ModalDialog>
+
+
+@code {
+    private bool isSelectionEmpty = true;
+
+    private string data = "10.06.2023r.";
+    private string godzina = "19:00";
+    private ProjektBlazor.Components.ModalDialog Modal { get; set; }
+
+
+}

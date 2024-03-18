@@ -1,0 +1,51 @@
+﻿@page "/"
+@inherits GlownaBase
+<PageTitle>Super kino</PageTitle>
+
+@if (Films == null)
+{
+
+		<h3 class="text-center mt-5">Ładowanie filmów</h3>
+
+}
+else
+{
+	var filmCount = Films.Count();
+
+	@if (filmCount > 0)
+	{
+		const int itemsPerRow = 4;
+		var filmRowList = new List<FilmDto>();
+
+		@for (int i = 0; i < filmCount; i++)
+		{
+			filmRowList = Films.Skip(i * itemsPerRow).Take(itemsPerRow).ToList();
+
+						<div class = "row">
+				@foreach (var item in filmRowList)
+				{
+									<div class = "col-md-3 mb-2">
+											<div class="card shadow mb-5 bg-white rounded" style="width:80%; margin:0 auto;">
+												<img class="card-img-top" src="@item.ImageURL" style="">
+												<div class="card-body">
+													<h5 class="card-title mb-3 text-center" style="	height: 0.9rem;">
+														<b>@item.Nazwa</b>
+													</h5>
+													<div class="card-text">
+														<p>Długość: @item.Dlugosc</p>
+														<p>Wiek: @item.Wiek</p>
+														<p>Produkcja: @item.Produkcja</p>
+														<a href="@item.ZwiastunURL" target="_blank">Zwiastun</a>
+													</div>
+														<a href="/sala/@item.Id" class="btn btn-primary">Rezerwacja</a>
+												</div>
+											</div>
+
+									</div>
+				}
+
+						</div>
+		}
+	}
+
+}

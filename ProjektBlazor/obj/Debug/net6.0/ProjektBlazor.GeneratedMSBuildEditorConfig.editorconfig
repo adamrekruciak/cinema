@@ -1,0 +1,61 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = ProjektBlazor
+build_property.RootNamespace = ProjektBlazor
+build_property.ProjectDir = E:\project\CałyProjektBlazor4\ProjektBlazor\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\project\CałyProjektBlazor4\ProjektBlazor
+build_property._RazorSourceGeneratorDebug = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Components/ModalDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xNb2RhbERpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Pages/Glowna.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2xvd25hLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Pages/Seats/Seats.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VhdHNcU2VhdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Pages/Seats/Seats2.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VhdHNcU2VhdHMyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Pages/Seats/Seats3.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VhdHNcU2VhdHMzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Pages/Seats/Seats4.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2VhdHNcU2VhdHM0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-5oatrye89j
+
+[E:/project/CałyProjektBlazor4/ProjektBlazor/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-effy1ehori
